@@ -12,7 +12,7 @@ DB_DATABASE = readingtracker
 Then Create a database on localhost/phpmyadmin named readingtracker (Base on the env file)
 
 ## 3 - MIGRATE TABLES
-On your terminal run `php artisan migrate` without quote
+On your terminal run `php artisan migrate`
 
 ## 4 - RUN THE WEB APP
 On your terminal run `php artisan serve` and open another terminal and run `npm run watch` or `npm run prod`
