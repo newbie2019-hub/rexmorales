@@ -5,7 +5,7 @@ After cloning this project follow the steps to run this project
 Open the project and open a terminal/cmd and run composer install and npm install command
 
 ## 2 - CHECK DB AND CREATE DB
-Open .env file and check for some like this:
+Open .env file and find this:
 
 DB_DATABASE = readingtracker
 
