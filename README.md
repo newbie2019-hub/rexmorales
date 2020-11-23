@@ -1,4 +1,3 @@
-
 # Installation
 After cloning this project follow the steps to run this project
 
@@ -22,11 +21,11 @@ Then go to 127.0.0.1 on your browser to check if the web app is now working.
 
 
 ## NOTE
-JWT (Jason Web Token) Tymon JWT
-Laravel (BackEnd)
-Rest APIs
-Vue JS(FrontEnd)
-MySql Database
+#### JWT (Jason Web Token) Tymon JWT
+#### Laravel (BackEnd)
+#### Rest APIs
+#### Vue JS(FrontEnd)
+#### MySql Database
 
 
 
