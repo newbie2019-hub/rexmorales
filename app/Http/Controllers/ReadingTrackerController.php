@@ -43,7 +43,6 @@ class ReadingTrackerController extends Controller
     public function get(Request $request)
     {
         $user = Auth::user();
-
         return trackreads::where(['user_id' => $user->id])->paginate($request->total);
     }
 
@@ -58,7 +57,7 @@ class ReadingTrackerController extends Controller
         $user = Auth::user();
         return trackreads::where(['user_id' => $user->id, 'status'=>'Did Not Finish'])->paginate($request->total);
     }
-
+    //HTTP REQUEST POST, PUT, DELETE, GET
     public function put(Request $request)
     {
         $data = [
@@ -70,10 +69,13 @@ class ReadingTrackerController extends Controller
             'review' => $request->review,
             'status' => $request->status,
         ];
-
+        // COMMENT HITON CODE IS Ctrl + /
+        // PAG DUPLICATE LINE IS SHIFT+ALT+DOWN ARROW
+        // MOVE LINE UP OR DOWN IS ALT + DOWN OR UP ARROW
         return trackreads::where(['id'=>$request->bookid])->update($data);
+        // return trackreads::where(['id'=>$request->bookid])->update(['booktitle' => $request->booktitle, ]);
     }
-
+    
     public function delete(Request $request)
     {
         trackreads::where(['id' => $request->id])->delete();
