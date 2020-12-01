@@ -527,7 +527,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+                  <label for="status" class="col-sm-2 col-form-label">Status</label>
                   <div class="col-sm-10 mt-1">
                     <select class="form-control custom-select" v-model="data.status" id="exampleFormControlSelect1">
                       <option>Reads</option> 
@@ -622,7 +622,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+                  <label for="status" class="col-sm-2 col-form-label">Status</label>
                   <div class="col-sm-10">
                     <star-rating
                       v-bind:max-rating="5"
