@@ -44,13 +44,13 @@ class ReadingTrackerController extends Controller
     {
         $user = Auth::user();
 
-        return trackreads::where(['user_id' => $user->id])->paginate($request->total);
+        return trackreads::where(['user_id' => $user->id, 'status'=>'Reads'])->paginate($request->total);
     }
 
     public function getToRead(Request $request)
     {
         $user = Auth::user();
-        return trackreads::where(['user_id' => $user->id, 'status'=>'To Read'])->paginate($request->total);
+        return trackreads::where(['user_id' => $user->id, 'status'=>'To Be Read'])->paginate($request->total);
     }
 
     public function getDidNotFinish(Request $request)

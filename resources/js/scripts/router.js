@@ -17,6 +17,11 @@ const routes =  [
     name: 'signup',
     component: () => import('../components/pages/signup'),
   },
+  {
+    path: '*',
+    name: 'notfound',
+    component: () => import('../components/pages/notfound')
+  }
 ]
 
 export default new Router({

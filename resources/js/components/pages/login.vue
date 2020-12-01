@@ -5,6 +5,7 @@
         :active.sync="loading"
         :can-cancel="false"
         :is-full-page="true"
+        :opacity="1"
       ></loading>
     </div>
     <div class="container-fluid p-0 m-0" style="height: 100vh">
@@ -155,8 +156,8 @@ export default {
   height: 200px;
   border-radius: 50%;
   background: radial-gradient(
-    rgba(236, 203, 14, 0.822),
-    rgba(241, 112, 6, 0.966)
+    rgba(236, 203, 14, 0.342),
+    rgba(241, 112, 6, 0.13)
   );
 
   &:nth-child(1) {

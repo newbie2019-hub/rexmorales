@@ -34,9 +34,7 @@
                   role="tab"
                   @click.prevent="getReads"
                   aria-controls="home"
-                  aria-selected="true"
-                  >Reads</a
-                >
+                  aria-selected="true">Reads</a>
               </li>
               <li class="nav-item" role="presentation">
                 <a
@@ -47,9 +45,7 @@
                   role="tab"
                   @click.prevent="toRead"
                   aria-controls="profile"
-                  aria-selected="false"
-                  >To Read</a
-                >
+                  aria-selected="false">To Be Read</a>
               </li>
               <li class="nav-item" role="presentation">
                 <a
@@ -248,6 +244,96 @@
                   ></pagination>
                 </div>
               </div>
+              <!--- THIRD TAB --->
+              <div
+                class="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab">
+                <div class="table-responsive mt-2">
+                  <table class="table table-hover" id="readingsTable">
+                    <caption>Showing {{reading.to}} of {{reading.total}} records</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Book Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Synopsis</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Review</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(book, i) in reading.data" :key="i">
+                        <td>{{ book.booktitle }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>
+                          <a href="" @click.prevent="viewSynopsis(book)">View</a>
+                        </td>
+                        <td>
+                          <star-rating
+                            v-bind:max-rating="5"
+                            v-bind:star-size="15"
+                            v-bind:rounded-corners="true"
+                            v-bind:padding="10"
+                            active-color="rgba(241, 112, 6, 0.966)"
+                            v-bind:animate="true"
+                            v-bind:rating="parseInt(book.rating)"
+                            v-bind:read-only="true"
+                            v-bind:show-rating="false"
+                          />
+                        </td>
+                        <td>
+                          <a href="" @click.prevent="viewReview(book)">View</a>
+                        </td>
+                        <td>{{ book.status}}</td>
+                        <td>
+                          <button
+                            class="btn btn-primary btn-sm"
+                            @click.prevent="editBook(book)">
+                            Edit
+                          </button>
+                          <button
+                            class="btn btn-danger btn-sm"
+                            @click.prevent="setDelete(book)">
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div
+                    class=""
+                    v-if="reading.data.length == 0"
+                    style="overflow: hidden"
+                  >
+                    <h5 class="text-center mt-5 mb-5">
+                      You currently have no books here, Wanna add something?
+                    </h5>
+                  </div>
+                </div>
+                <div class="row justify-content-end mr-1">
+                  <div class="form-group mr-2">
+                    <select
+                      id="customSelect"
+                      @change="ChangeTotal($event)"
+                      class="custom-select"
+                    >
+                      <option selected value="4">4</option>
+                      <option value="6">6</option>
+                      <option value="8">8</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
+                  <pagination
+                    :data="reading"
+                    @pagination-change-page="getReads"
+                  ></pagination>
+                </div>
+              </div>
               <!--- THIRD TAB -->
               <div
                 class="tab-pane fade"
@@ -311,11 +397,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div
-                    class=""
-                    v-if="reading.data.length == 0"
-                    style="overflow: hidden"
-                  >
+                  <div class="" v-if="reading.data.length == 0" style="overflow: hidden">
                     <h5 class="text-center mt-5 mb-5">
                       You currently have no books here, Wanna add something?
                     </h5>
@@ -347,13 +429,11 @@
 
       <!--- ADD MODAL --->
       <!-- Modal -->
-      <div
-        class="modal fade"
+      <div class="modal fade"
         id="addModal"
         tabindex="-1"
         aria-labelledby="AddBookModal"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
@@ -362,17 +442,14 @@
                 type="button"
                 class="close"
                 data-dismiss="modal"
-                aria-label="Close"
-              >
+                aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form>
                 <div class="form-group row">
-                  <label for="booktitle" class="col-sm-2 col-form-label"
-                    >Title</label
-                  >
+                  <label for="booktitle" class="col-sm-2 col-form-label">Title</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -384,23 +461,18 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="genre" class="col-sm-2 col-form-label"
-                    >Genre</label
-                  >
+                  <label for="genre" class="col-sm-2 col-form-label">Genre</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
                       v-model="data.genre"
                       class="form-control"
                       id="genre"
-                      placeholder="Genre"
-                    />
+                      placeholder="Genre"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="author" class="col-sm-2 col-form-label"
-                    >Author</label
-                  >
+                  <label for="author" class="col-sm-2 col-form-label">Author</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -444,24 +516,22 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="review" class="col-sm-2 col-form-label"
-                    >Review</label
-                  >
+                  <label for="review" class="col-sm-2 col-form-label">Review</label>
                   <div class="col-sm-10">
                     <textarea
                       class="form-control"
                       id="review"
                       v-model="data.review"
                       rows="3"
-                      placeholder="Review"
-                    ></textarea>
+                      placeholder="Review"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="rating" class="col-sm-2 col-form-label">Rating</label>
                   <div class="col-sm-10 mt-1">
                     <select class="form-control custom-select" v-model="data.status" id="exampleFormControlSelect1">
-                      <option>To Read</option> 
+                      <option>Reads</option> 
+                      <option>To Be Read</option> 
                       <option>Did Not Finish</option>
                     </select>
                   </div>
@@ -472,15 +542,11 @@
               <button
                 type="button"
                 class="btn btn-secondary btn-sm"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+                data-dismiss="modal">Close</button>
               <button
                 type="button"
                 @click.prevent="saveBook"
-                class="btn btn-primary btn-sm"
-              >
+                class="btn btn-primary btn-sm">
                 Save Book
               </button>
             </div>
@@ -489,14 +555,12 @@
       </div>
 
       <!--- EDIT MODAL --->
-      <!-- Modal -->
       <div
         class="modal fade"
         id="editModal"
         tabindex="-1"
         aria-labelledby="Edit Book"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
@@ -512,37 +576,29 @@
             <div class="modal-body">
               <form>
                 <div class="form-group row">
-                  <label for="booktitle" class="col-sm-2 col-form-label"
-                    >Title</label
-                  >
+                  <label for="booktitle" class="col-sm-2 col-form-label">Title</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
                       v-model="data.booktitle"
                       class="form-control"
                       id="booktitle"
-                      placeholder="Book Title"
-                    />
+                      placeholder="Book Title"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="genre" class="col-sm-2 col-form-label"
-                    >Genre</label
-                  >
+                  <label for="genre" class="col-sm-2 col-form-label">Genre</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
                       v-model="data.genre"
                       class="form-control"
                       id="genre"
-                      placeholder="Genre"
-                    />
+                      placeholder="Genre"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="author" class="col-sm-2 col-form-label"
-                    >Author</label
-                  >
+                  <label for="author" class="col-sm-2 col-form-label">Author</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -554,9 +610,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="synopsis" class="col-sm-2 col-form-label"
-                    >Synopsis</label
-                  >
+                  <label for="synopsis" class="col-sm-2 col-form-label">Synopsis</label>
                   <div class="col-sm-10">
                     <textarea
                       class="form-control"
@@ -568,9 +622,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="rating" class="col-sm-2 col-form-label"
-                    >Rating</label
-                  >
+                  <label for="rating" class="col-sm-2 col-form-label">Rating</label>
                   <div class="col-sm-10">
                     <star-rating
                       v-bind:max-rating="5"
@@ -586,9 +638,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="review" class="col-sm-2 col-form-label"
-                    >Review</label
-                  >
+                  <label for="review" class="col-sm-2 col-form-label">Review</label>
                   <div class="col-sm-10">
                     <textarea
                       class="form-control"
@@ -603,7 +653,8 @@
                   <label for="rating" class="col-sm-2 col-form-label">Rating</label>
                   <div class="col-sm-10 mt-1">
                     <select class="form-control custom-select" v-model="data.status" id="exampleFormControlSelect1">
-                      <option>To Read</option> 
+                      <option>Reads</option> 
+                      <option>To Be Read</option> 
                       <option>Did Not Finish</option>
                     </select>
                   </div>
@@ -1010,4 +1061,5 @@ export default {
 .text-area {
   border: 1px solid rgba(241, 112, 6, 0.966) !important;
 }
+
 </style>
