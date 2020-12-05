@@ -4,6 +4,7 @@
       :active.sync="loading"
       :can-cancel="true"
       :is-full-page="true"
+      :opacity="1"
     ></loading>
     <div class="container-fluid p-0 m-0" style="height: 100vh">
       <div class="row h-100 align-items-center p-0 m-0">

@@ -10988,9 +10988,10 @@ p {
 }
 
 .login-bg {
-  background: linear-gradient(to bottom, rgba(226, 159, 13, 0.418), rgba(0, 0, 0, 0.445)), url(/images/bg.jpg?bd5df3010b6b19d65eabeec8e58fdaff);
+  background: linear-gradient(to bottom, rgba(14, 203, 236, 0.432), rgba(6, 30, 241, 0.507)), url(/images/bg.jpg?bd5df3010b6b19d65eabeec8e58fdaff);
   background-position: center;
   background-repeat: no-repeat;
+  background-blend-mode: multiply;
   background-size: cover;
   height: 100vh;
   width: 100%;

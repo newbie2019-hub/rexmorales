@@ -9,20 +9,20 @@
     </div>
     <div class="container-fluid p-0 m-0" style="height: 100vh">
       <div class="row h-100 align-items-center p-0 m-0">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0 login-bg"></div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0 login-bg">
+          <div class="row justify-content-center">
+            <h4 class="text-uppercase">Rex-Grocery</h4>
+          </div>
+        </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 h-100 p-0 m-0">
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="form-container">
-            <div class="row justify-content-center d-flex text-center">
+          <div class="form-container card p-5" style="min-width: 420px; max-width: 480px">
+            <div class="d-flex flex-lg-column justify-content-center  text-center">
               <h3>Welcome Back, Guest!</h3>
-              <p>Keep track of the books you read.</p>
-              <p class="mt-4">Please login your account to proceed</p>
+              <p>Manage your grocery list easily.</p>
+              <p class="mt-4">Please login your account</p>
             </div>
             <div class="row justify-content-center">
-              <div class="col-12 col-sm-12 col-md-11 col-lg-9">
+              <div class="col-12 col-sm-12 col-md-11 col-lg-10">
                 <input
                   type="email"
                   class="form-control mt-3"
@@ -65,10 +65,7 @@ import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   async mounted() {
     this.loading = true;
-    const res = await this.callApi(
-      "post",
-      `api/auth/me?token=${this.$store.state.token}`
-    );
+    const res = await this.callApi("post",`api/auth/me?token=${this.$store.state.token}`);
     if (res.status == 200) {
       this.$router.push("/home");
       this.loading = false;
@@ -92,6 +89,17 @@ export default {
     };
   },
   methods: {
+    async callApi(method, url, data) {
+      try {
+        return await axios({
+          method: method,
+          url: url,
+          data: data
+        });
+      } catch (e) {
+        return e.response
+      }
+    },
     async login() {
       if (this.data.email.trim() == "")
         return this.error("Email Address is required");
@@ -128,56 +136,23 @@ export default {
 .btn-login {
   background: linear-gradient(
     to right,
-    rgba(236, 203, 14, 0.822),
-    rgba(241, 112, 6, 0.966)
+    rgba(14, 203, 236, 0.822),
+    rgba(6, 30, 241, 0.966)
   );
   color: white;
   transition: all 250ms;
 
   &:hover {
-    border: 1px solid rgb(240, 109, 1);
+    border: 1px solid rgb(14, 203, 236, 0.822);
   }
 }
 .form-control {
-  border: 1px solid rgba(241, 112, 6, 0.966) !important;
+  border: 1px solid rgba(6, 30, 241, 0.966) !important;
 }
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-.gcircle {
-  position: fixed;
-  right: -60px;
-  top: -50px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(
-    rgba(236, 203, 14, 0.822),
-    rgba(241, 112, 6, 0.966)
-  );
-
-  &:nth-child(1) {
-    right: 28%;
-    top: -40px;
-    width: 80px;
-    height: 80px;
-  }
-
-  &:nth-child(2) {
-    right: 38%;
-    top: 10%;
-    width: 120px;
-    height: 120px;
-  }
-
-  &:nth-child(3) {
-    right: 32%;
-    top: 24%;
-    width: 70px;
-    height: 70px;
-  }
 }
 </style>
