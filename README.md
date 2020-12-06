@@ -7,9 +7,9 @@ Open the project and open a terminal/cmd and run composer install and npm instal
 ## 2 - CHECK DB AND CREATE DB
 Open .env file and find this:
 
-DB_DATABASE = readingtracker
+DB_DATABASE = grocerydb
 
-Then Create a database on localhost/phpmyadmin named readingtracker (Base on the env file)
+Then Create a database on localhost/phpmyadmin named grocerydb (Base on the env file)
 
 ## 3 - MIGRATE TABLES
 On your terminal run `php artisan migrate`
