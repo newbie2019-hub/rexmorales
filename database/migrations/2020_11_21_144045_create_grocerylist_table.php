@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrackreadsTable extends Migration
+class CreateGrocerylistTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateTrackreadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trackreads', function (Blueprint $table) {
+        Schema::create('grocerylist', function (Blueprint $table) {
             $table->id();
-            $table->string('booktitle');
-            $table->string('genre');
-            $table->string('author');
-            $table->longText('synopsis');
-            $table->integer('rating')->default(0);
-            $table->longText('review');
+            $table->string('title');
+            $table->string('date');
+            $table->longText('list');
             $table->integer('user_id');
-            $table->string('status');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ class CreateTrackreadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trackreads');
+        Schema::dropIfExists('grocerylist');
     }
 }
