@@ -4,7 +4,6 @@
       <div class="row h-100 align-items-center justify-content-center p-0 m-0">
         <div class="d-block text-center">
           <img src="images/notfound.gif" class="img-fluid" height="350" width="450"/>
-          <p class="header">404</p>
           <p class="header-secondary">Uh Oh! You got lost</p>
           <p>The page you are looking for doesn't exist.</p>
         </div>
