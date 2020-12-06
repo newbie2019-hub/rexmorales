@@ -1,37 +1,5 @@
 @media only screen and(max-width: 904px){
-  .gcircle {
-    position: fixed;
-    right: -60px;
-    top: -50px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(
-      rgba(236, 203, 14, 0.822),
-      rgba(241, 112, 6, 0.966)
-    );
   
-    &:nth-child(1) {
-      right: 28%;
-      top: -40px;
-      width: 80px;
-      height: 80px;
-    }
-  
-    &:nth-child(2) {
-      right: 38%;
-      top: 10%;
-      width: 120px;
-      height: 120px;
-    }
-  
-    &:nth-child(3) {
-      right: 32%;
-      top: 24%;
-      width: 70px;
-      height: 70px;
-    }
-  }
 
 }
 
@@ -40,37 +8,18 @@
     display: none;
   }
 
-  .gcircle {
-    position: fixed;
-    right: -60px;
-    top: -50px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(
-      rgba(236, 203, 14, 0.822),
-      rgba(241, 112, 6, 0.966)
-    );
-  
-    &:nth-child(1) {
-      left: 20%;
-      top: -40px;
-      width: 80px;
-      height: 80px;
-    }
-  
-    &:nth-child(2) {
-      left: 10%;
-      top: 10%;
-      width: 120px;
-      height: 120px;
-    }
-  
-    &:nth-child(3) {
-      left: 24% !important;
-      top: 30% !important;
-      width: 70px;
-      height: 70px;
-    }
+  .login-bg-mobile {
+    background: linear-gradient(to bottom, rgba(14, 203, 236, 0.432), rgba(6, 30, 241, 0.507)), url('../images/bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-size: cover;
+    height: 0;
+    width:0;
+    position: relative;  
+  }
+
+  .card {
+    min-width: 300px !important;
   }
 }

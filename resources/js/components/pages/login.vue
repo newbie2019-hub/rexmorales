@@ -10,13 +10,14 @@
     <div class="container-fluid p-0 m-0" style="height: 100vh">
       <div class="row h-100 align-items-center p-0 m-0">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0 login-bg">
-          <div class="row justify-content-center">
-            <h4 class="text-uppercase">Rex-Grocery</h4>
+          <div class="d-flex flex-column flex-lg-column flex-md-column justify-content-center align-items-center h-100">
+            <p class="text-uppercase header-primary">Rex-Grocery</p>
+            <p class="text-white">Easily manage your schedule and items for your grocery.</p>
           </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 h-100 p-0 m-0">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 h-100 p-0 m-0 login-bg-mobile">
           <div class="form-container card p-5" style="min-width: 420px; max-width: 480px">
-            <div class="d-flex flex-lg-column justify-content-center  text-center">
+            <div class="d-flex flex-column flex-lg-column flex-md-column justify-content-center  text-center">
               <h3>Welcome Back, Guest!</h3>
               <p>Manage your grocery list easily.</p>
               <p class="mt-4">Please login your account</p>
@@ -154,5 +155,10 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.header-primary {
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: white;
 }
 </style>

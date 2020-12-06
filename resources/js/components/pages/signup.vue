@@ -8,16 +8,17 @@
     ></loading>
     <div class="container-fluid p-0 m-0" style="height: 100vh">
       <div class="row h-100 align-items-center p-0 m-0">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0 login-bg"></div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 h-100 p-0 m-0">
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="gcircle"></div>
-          <div class="form-container">
-            <div class="row justify-content-center d-flex text-center">
-              <h3>Welcome to Reading Tracker!</h3>
-              <p>Keep track of the books you read.</p>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0 login-bg">
+           <div class="d-flex flex-column flex-lg-column flex-md-column justify-content-center align-items-center h-100">
+            <p class="text-uppercase header-primary">Rex-Grocery</p>
+            <p class="text-white">Easily manage your schedule and items for your grocery.</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 h-100 p-0 m-0 ">
+          <div class="form-container card p-5" style="min-width: 420px; max-width: 480px">
+            <div class="d-flex flex-column flex-lg-column flex-md-column justify-content-center d-flex text-center">
+              <h3>Hey There, User!</h3>
+              <p>Keep track of your schedule and grocery list.</p>
               <p class="mt-4">We need some of your informations</p>
             </div>
             <div class="row justify-content-center">
