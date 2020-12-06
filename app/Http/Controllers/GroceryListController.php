@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\trackreads;
+use App\Models\grocerylists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReadingTrackerController extends Controller
+class GroceryListController extends Controller
 {
     public function __construct()
     {
@@ -16,47 +16,30 @@ class ReadingTrackerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'booktitle' => 'required|min:6',
-            'genre' => 'required|min:6',
-            'author' => 'required',
-            'synopsis' => 'required|min:6',
-            'rating' => 'required',
-            'review' => 'required|min:6',
-            'status' => 'required',
+            'title' => 'required|min:6',
+            'date' => 'required|min:6',
+            'list' => 'required',
         ]);
 
-        trackreads::create([
-            'booktitle' => $request->booktitle,
-            'genre' => $request->genre,
-            'author' => $request->author,
-            'synopsis' => $request->synopsis,
-            'rating' => $request->rating,
-            'review' => $request->review,
-            'user_id' => $request->userid,
-            'status' => $request->status,
+        $user = Auth::user();    
+
+        grocerylists::create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'list' => $request->list,
+            'user_id' => $user->id,
         ]);
 
-        return response()->json(['success' => 'Book saved successfully!'], 200);
+        return response()->json(['success' => 'List saved successfully!'], 200);
     }
 
 
     public function get(Request $request)
     {
         $user = Auth::user();
-        return trackreads::where(['user_id' => $user->id, 'status'=>'Reads'])->paginate($request->total);
+        return grocerylists::where(['user_id' => $user->id])->paginate($request->total);
     }
 
-    public function getToRead(Request $request)
-    {
-        $user = Auth::user();
-        return trackreads::where(['user_id' => $user->id, 'status'=>'To Be Read'])->paginate($request->total);
-    }
-
-    public function getDidNotFinish(Request $request)
-    {
-        $user = Auth::user();
-        return trackreads::where(['user_id' => $user->id, 'status'=>'Did Not Finish'])->paginate($request->total);
-    }
     //HTTP REQUEST POST, PUT, DELETE, GET
     public function put(Request $request)
     {
@@ -65,17 +48,14 @@ class ReadingTrackerController extends Controller
             'genre' => $request->genre,
             'author' => $request->author,
             'synopsis' => $request->synopsis,
-            'rating' => $request->rating,
-            'review' => $request->review,
-            'status' => $request->status,
         ];
 
-        return trackreads::where(['id'=>$request->bookid])->update($data);
+        return grocerylists::where(['id'=>$request->bookid])->update($data);
     }
     
     public function delete(Request $request)
     {
-        trackreads::where(['id' => $request->id])->delete();
+        grocerylists::where(['id' => $request->id])->delete();
         return response()->json(["msg" => "Delete successful"], 200);
     }
 }
