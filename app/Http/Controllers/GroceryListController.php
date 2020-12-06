@@ -44,13 +44,13 @@ class GroceryListController extends Controller
     public function put(Request $request)
     {
         $data = [
-            'booktitle' => $request->booktitle,
-            'genre' => $request->genre,
-            'author' => $request->author,
-            'synopsis' => $request->synopsis,
+            'title' => $request->title,
+            'date' => $request->date,
+            'list' => $request->list,
+            'status' => $request->status,
         ];
 
-        return grocerylists::where(['id'=>$request->bookid])->update($data);
+        return grocerylists::where(['id'=>$request->id])->update($data);
     }
     
     public function delete(Request $request)

@@ -11,7 +11,7 @@
     <div class="container" style="height: 100vh">
       <h5 class="pt-5">Welcome back, {{ username }}!</h5>
       <h6 class="mt-2">Listed below are your grocery list</h6>
-      <div class="row justify-content-center align-items-center">
+      <div class="row justify-content-center">
         <div class="col-9 col-sm-10 col-md-6 col-lg-6 mt-2">
           <div class="d-flex ml-1 mr-1 justify-content-between">
             <a
@@ -31,33 +31,89 @@
           <div class="list-group">
             <a
               href="#"
+              v-for="(l, i) in list.data"
+              :key="i"
               class="list-group-item d-flex justify-content-between align-items-center mt-2 shadow-sm"
-            >
-              Grocery for Home (02-20-2020)
-              <span class="badge badge-primary badge-pill">14</span>
-            </a>
-            <a
-              href="#"
-              class="list-group-item d-flex justify-content-between align-items-center mt-2 shadow-sm"
-            >
-              Grocery for Home (02-20-2020)
-              <span class="badge badge-primary badge-pill">14</span>
+              @click.prevent="setList(l)" >
+              <span :style="l.status ? 'text-decoration: line-through': ''">{{ l.title }}</span>
+              <span class="text-muted">{{ l.date | formatDate }}</span>
+              <span class="badge badge-pill" :class="l.status ? 'badge-success' : 'badge-secondary'">{{l.status ? 'Finished' : 'Pending'}}</span>
             </a>
           </div>
-          <div class="row justify-content-end mt-4 mb-3">
+          <div class="row justify-content-end mt-4 mb-3 mr-1">
             <p class="mr-2 mt-1">Total</p>
             <div class="form-group mr-3">
-              <select id="customSelect" class="custom-select">
-                <option selected>3</option>
+              <select id="customSelect"  @change="totalChange($event)" class="custom-select">
+                <option selected>4</option>
                 <option value="5">5</option>
                 <option value="8">8</option>
                 <option value="10">10</option>
               </select>
             </div>
-           
+             <pagination
+                :data="list"
+                @pagination-change-page="getList"
+              ></pagination>
           </div>
         </div>
-        <div class="col-9 col-sm-10 col-md-6 col-lg-6 mt-5"></div>
+        <div class="col-9 col-sm-10 col-md-6 col-lg-6 mt-5 mb-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-10 col-sm-10">
+              <h4 class="mt-2">Here is your grocery list</h4>
+              <p class="mt-2">Grocery Title</p>
+              <input
+                type="text"
+                class="form-control"
+                v-model="editList.title"
+                id="title"
+                placeholder="Title"
+              />
+              <p>Date</p>
+              <input
+                class="form-control"
+                type="datetime-local"
+                v-model="editList.date"
+                id="date"
+              />
+              <p>Grocery Items</p>
+              <textarea
+                class="form-control"
+                id="list"
+                v-model="editList.list"
+                rows="4"
+              ></textarea>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  v-model="editList.status"
+                  id="status"
+                />
+                <label class="form-check-label" for="status">
+                  Mark as finished
+                </label>
+              </div>
+              <div class="row justify-content-end mr-1 mt-2">
+                <button
+                  class="btn btn-sm btn-danger mr-1"
+                  href="#"
+                  :disabled="isUpdateDisabled"
+                  @click.prevent="deleteList"
+                >
+                  Delete
+                </button>
+                <button
+                  class="btn btn-sm btn-primary"
+                  href="#"
+                  :disabled="isUpdateDisabled"
+                  @click.prevent='updateList'
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -119,7 +175,13 @@
             >
               Close
             </button>
-            <button type="button" @click.prevent="saveList" class="btn btn-primary">Save List</button>
+            <button
+              type="button"
+              @click.prevent="saveList"
+              class="btn btn-primary"
+            >
+              Save List
+            </button>
           </div>
         </div>
       </div>
@@ -135,17 +197,27 @@ export default {
   },
   async mounted() {
     this.checkToken();
+    this.getList();
   },
   data() {
     return {
       username: localStorage.getItem("username"),
+      list: [],
       data: {
         title: "",
         list: "",
         date: "",
       },
       loading: false,
-      total: 3,
+      isUpdateDisabled: true,
+      total: 4,
+      editList: {
+        id: '',
+        title: "",
+        list: "",
+        date: "",
+        status: '',
+      },
     };
   },
 
@@ -179,6 +251,39 @@ export default {
         this.$router.push("/");
       }
     },
+    setList(list) {
+      this.editList.title = list.title;
+      this.editList.date = list.date;
+      this.editList.list = list.list;
+      this.editList.id = list.id;
+      this.editList.status = list.status;
+
+      this.isUpdateDisabled = false;
+    },
+    async updateList(){
+      if (this.editList.title.trim() == "")
+        return this.warning("Title is required");
+      if (this.editList.date.trim() == "") return this.warning("Date is required");
+      if (this.editList.list.trim() == "") return this.warning("List is required");
+
+      this.loading = true;  
+
+      const res = await this.callApi('put',`api/track/put?token=${this.$store.state.token}`, this.editList)
+      if(res.status == 200){
+        this.getList()
+        this.loading = false;
+        this.clearUpdate()
+        return this.success("List updated successfully!");
+      }
+    },
+    async deleteList(){
+      const res = await this.callApi('delete', `api/track/delete?token=${this.$store.state.token}&id=${this.editList.id}`)
+      if(res.status == 200){
+        this.clearUpdate();
+        this.getList()
+        return this.success('List deleted successfuly!')
+      }
+    },
     async saveList() {
       if (this.data.title.trim() == "")
         return this.warning("Title is required");
@@ -194,7 +299,8 @@ export default {
       if (res.status == 200) {
         this.loading = false;
         this.clearFields();
-        this.data.rating = 0;
+        this.getList();
+        $('#addModal').modal('hide')
         return this.success("Grocery List saved successfully!");
       } else {
         if (res.status == 422) {
@@ -205,7 +311,33 @@ export default {
         }
         this.loading = false;
       }
+      
     },
+    async getList(page = 1) {
+      const res = await this.callApi(
+        "get",
+        `api/track/get?token=${this.$store.state.token}&total=${this.total}&page=${page}`
+      );
+      if (res.status == 200) {
+        this.list = res.data;
+      }
+    },
+    clearFields() {
+      this.data.title = "";
+      this.data.date = "";
+      this.data.list = "";
+    },
+    totalChange(event) {
+      this.total = event.target.value;
+      this.getList();
+    },
+    clearUpdate() {
+      this.editList.id = ''
+      this.editList.title = ''
+      this.editList.date = ''
+      this.editList.list = ''
+      this.editList.status = false
+    }
   },
 };
 </script>

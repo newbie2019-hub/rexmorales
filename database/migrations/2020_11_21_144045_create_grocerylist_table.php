@@ -13,12 +13,13 @@ class CreateGrocerylistTable extends Migration
      */
     public function up()
     {
-        Schema::create('grocerylist', function (Blueprint $table) {
+        Schema::create('grocerylists', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('date');
             $table->longText('list');
             $table->integer('user_id');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateGrocerylistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grocerylist');
+        Schema::dropIfExists('grocerylists');
     }
 }

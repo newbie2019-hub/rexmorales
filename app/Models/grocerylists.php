@@ -14,5 +14,6 @@ class grocerylists extends Model
         'date',
         'list',
         'user_id',
+        'status',
     ];
 }
