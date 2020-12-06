@@ -5,6 +5,7 @@
         :active.sync="loading"
         :can-cancel="false"
         :is-full-page="true"
+        :opacity="1"
       ></loading>
     </div>
     <div class="container-fluid p-0 m-0" style="height: 100vh">
